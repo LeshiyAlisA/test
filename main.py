@@ -24,7 +24,6 @@ class WebService:
             print "UpdateTime: "+rate.find("UpdateTime").text
 
             
-
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand)
