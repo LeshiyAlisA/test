@@ -9,6 +9,9 @@ class WebService:
     def PlaceSingleOrder(self,UserID,PWD,Pair,Expiry,BuySell,Amount,Rate,OrderBasis):
         print "PlaceSingleOrder"
 
+
+
+
     def GetRatesDataSet(self,key):
         print "GetRates"
         print key
@@ -19,6 +22,8 @@ class WebService:
             print "Quote: " + rate.find("Quote").text
             print "Display: "+rate.find("Display").text
             print "UpdateTime: "+rate.find("UpdateTime").text
+
+            
 
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
