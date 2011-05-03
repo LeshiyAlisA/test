@@ -3,14 +3,7 @@ __author__ = 'leshiy'
 
 import urllib
 import sys
-import html5lib
-from html5lib import treebuilders
 from lxml import etree
-
-
-
-
-
 
 class WebService:
     def PlaceSingleOrder(self,UserID,PWD,Pair,Expiry,BuySell,Amount,Rate,OrderBasis):
@@ -30,19 +23,8 @@ class WebService:
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand)
-
-        parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
-        doc = parser.parse(u)
-
-        n=doc.getElementsByTagName("string")[0]       
-
-        for nchild in n.childNodes:
-            if nchild.nodeType==3:
-                return nchild.data.strip()
-
-
-
-
+        root = etree.XML(u.read())
+        return root.text
 
 
 ws=WebService()
