@@ -1,7 +1,6 @@
 __author__ = 'leshiy'
 #-*- coding: utf-8 -*-
 
-from xml.dom import minidom
 import urllib
 import sys
 import html5lib
@@ -21,16 +20,27 @@ class WebService:
         print "GetRates"
         print key
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
+        root = etree.XML(u.read())
+        rates=root.findall(".//Rates")
+        for rate in rates:
+            print "Quote: " + rate.find("Quote").text
+            print "Display: "+rate.find("Display").text
+            print "UpdateTime: "+rate.find("UpdateTime").text
+
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand)
 
-        doc =minidom.parseString(u.read())
-        n=doc.getElementsByTagName("string")[0]
+        parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
+        doc = parser.parse(u)
+
+        n=doc.getElementsByTagName("string")[0]       
 
         for nchild in n.childNodes:
             if nchild.nodeType==3:
                 return nchild.data.strip()
+
+
 
 
 
