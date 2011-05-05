@@ -13,15 +13,16 @@ class WebService:
 
 
     def GetRatesDataSet(self,key):
-        print "GetRates"
-        print key
+        dataset=[]
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
         root = etree.XML(u.read())
         rates=root.findall(".//Rates")
+
         for rate in rates:
-            print "Quote: " + rate.find("Quote").text
-            print "Display: "+rate.find("Display").text
-            print "UpdateTime: "+rate.find("UpdateTime").text
+            quote=[rate.find("Quote").text,rate.find("Display").text,rate.find("UpdateTime").text]
+            dataset.append(quote)
+
+        return dataset
 
             
         
@@ -33,6 +34,10 @@ class WebService:
 
 ws=WebService()
 key= ws.GetRatesServerAuth(sys.argv[1],sys.argv[2],sys.argv[3])
-ws.GetRatesDataSet(key)
+ds=ws.GetRatesDataSet(key)
+print key
+for i in ds:
+    for j in i:
+        print j
 
 
