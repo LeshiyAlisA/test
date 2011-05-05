@@ -13,7 +13,7 @@ class TestWebService(unittest.TestCase):
     def testGetRatesServerAuth(self):
         str=self.Webservice.GetRatesServerAuth(sys.argv[1],sys.argv[2],sys.argv[3])
         self.assertEqual(str, 0)
-
+ 
 
 
 if __name__ == "__main__":
