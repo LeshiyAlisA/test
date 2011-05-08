@@ -1,9 +1,8 @@
 __author__ = 'leshiy'
 #-*- coding: utf-8 -*-
 
-from main import WebService
+from forex import WebService
 import unittest
-import sys
 import pickle
 
 class TestWebService(unittest.TestCase):
@@ -16,6 +15,7 @@ class TestWebService(unittest.TestCase):
         y=pickle.load(f)
         str=self.Webservice.GetRatesServerAuth(y[0],y[1],y[2])
         self.assertEqual('859F296AEA2CF46F54FBFA3DDFD6B8CE',str)
+
 
 def main():
     unittest.main()
