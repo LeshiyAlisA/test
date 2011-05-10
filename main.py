@@ -16,7 +16,6 @@ while 1==1:
     Rates=vs.GetRatesDataSet(key)
     for i in Rates:
         rates.save(i)
-        print rates.count()
 
 
 
