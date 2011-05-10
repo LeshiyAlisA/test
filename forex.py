@@ -11,7 +11,6 @@ class WebService:
 
 
 
-
     def GetRatesDataSet(self,key):
         dataset=[]
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
@@ -19,12 +18,12 @@ class WebService:
         rates=root.findall(".//Rates")
 
         for rate in rates:
-            quote=[rate.find("Quote").text,rate.find("Display").text,rate.find("UpdateTime").text]
+            quote={"Quote":rate.find("Quote").text,"Display":rate.find("Display").text,"UpdateTime":rate.find("UpdateTime").text}
             dataset.append(quote)
 
         return dataset
 
-            
+    
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand)
