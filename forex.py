@@ -26,7 +26,6 @@ class WebService:
             return dataset
 
         except :
-            print "ошибка"
             return 0
 
     

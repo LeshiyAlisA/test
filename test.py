@@ -6,15 +6,35 @@ import unittest
 import pickle
 
 class TestWebService(unittest.TestCase):
+    tlogin=''
+    tpass=''
+    tbrand=''
 
     def setUp(self):
         self.Webservice=WebService()
-
-    def testGetRatesServerAuth(self):
         f = open('/home/leshiy/str.txt', 'rb+')
         y=pickle.load(f)
-        str=self.Webservice.GetRatesServerAuth(y[0],y[1],y[2])
+        self.tlogin=y[0]
+        self.tpass=y[1]
+        self.tbrand=y[2]
+
+
+    def testGetRatesServerAuth(self):
+        str=self.Webservice.GetRatesServerAuth(self.tlogin,self.tpass,self.tbrand)
         self.assertEqual('859F296AEA2CF46F54FBFA3DDFD6B8CE',str)
+
+    def testGetRatesBlotter(self):
+        str=self.Webservice.GetRatesServerAuth(self.tlogin,self.tpass,self.tbrand)
+        rates=self.Webservice.GetRatesBlotter(str)
+        self.assertEquals(54,len(rates))
+
+    def testGetRatesDataSet(self):
+        str=self.Webservice.GetRatesServerAuth(self.tlogin,self.tpass,self.tbrand)
+        rates=self.Webservice.GetRatesDataSet(str)
+        self.assertEquals(54,len(rates))
+
+
+
 
 
 def main():
