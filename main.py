@@ -46,10 +46,10 @@ class main:
 
         
 vs=forex.WebService()
-f = open('/home/leshiy/str.txt', 'rb+')
-y=pickle.load(f)
-key=vs.GetRatesServerAuth(y[0],y[1],y[2])
-vs.GetRatesBlotter(key)
+#f = open('/home/leshiy/str.txt', 'rb+')
+#y=pickle.load(f)
+#key=vs.GetRatesServerAuth(y[0],y[1],y[2])
+vs.GetRatesBlotter('859F296AEA2CF46F54FBFA3DDFD6B8CE')
 
 
   
