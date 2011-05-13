@@ -29,7 +29,9 @@ class main:
 
 
     def test2(self):
+
         connection=Connection("localhost",27017)
+
         db=connection.db
         rates=db.rates
 
@@ -39,18 +41,20 @@ class main:
         key=vs.GetRatesServerAuth(y[0],y[1],y[2])
 
         while 1==1:
-            Rates=vs.GetRatesDataSet(key)
+            Rates=vs.GetRatesBlotter(key)
             for i in Rates:
                 rates.save(i)
                 print rates.count()
 
         
-vs=forex.WebService()
+#vs=forex.WebService()
 #f = open('/home/leshiy/str.txt', 'rb+')
 #y=pickle.load(f)
 #key=vs.GetRatesServerAuth(y[0],y[1],y[2])
-vs.GetRatesBlotter('859F296AEA2CF46F54FBFA3DDFD6B8CE')
+#print vs.GetRatesBlotter('859F296AEA2CF46F54FBFA3DDFD6B8CE')
 
+q=main()
+q.test2()
 
   
 

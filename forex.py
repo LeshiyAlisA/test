@@ -41,13 +41,18 @@ class WebService:
         root = etree.XML(u.read())
         str=root.text
 
+        rates=[]
+        
         str=string.split(str,"$")
         for i in str:
             j=string.split(i,"\\")
             if len(j)==11:
                 rate={"PAIR":j[0],"BID":j[1],"OFFER":j[2],"STATUS":j[3],"HIGH":j[4],"LOW":j[5],
                       "DECIMALPLACES":j[6],"NOTATION":j[7],"CLOSINGBID":j[8],"COUNTERPAIR":j[9],"UPDATEDATETIME":j[10]}
-                return rate
+                rates.append(rate)
+
+        return rates
+
             
 
 
