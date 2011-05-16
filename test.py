@@ -33,6 +33,12 @@ class TestWebService(unittest.TestCase):
         rates=self.Webservice.GetRatesDataSet(str)
         self.assertEquals(54,len(rates))
 
+    def testPlaceSingleOrder(self):
+        str=self.Webservice.GetRatesServerAuth(self.tlogin,self.tpass,self.tbrand)
+        order=self.Webservice.PlaceSingleOrder(self.tlogin,self.tpass,'EUR/USD', 'EOD','B','1','1','B')
+        self.assertEqual('false',order['Success'])
+
+
 
 
 

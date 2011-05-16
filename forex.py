@@ -8,8 +8,25 @@ import re
 import string
 
 class WebService:
+
     def PlaceSingleOrder(self,UserID,PWD,Pair,Expiry,BuySell,Amount,Rate,OrderBasis):
-        print "PlaceSingleOrder"
+
+        u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/PlaceSingleOrder?UserID='+UserID+'&PWD='+PWD+'&Pair='+Pair+'&Expiry='+Expiry+'&BuySell='+BuySell+'&Amount='+Amount+'&Rate='+Rate+'&OrderBasis='+OrderBasis)
+        root = etree.XML(u.read())
+        return {'Success':root.find('{https://api.efxnow.com/webservices2.3}Success').text,
+                'ErrorDescription':root.find('{https://api.efxnow.com/webservices2.3}ErrorDescription').text,
+                'ErrorNumber':root.find('{https://api.efxnow.com/webservices2.3}ErrorNumber').text,
+                'CustomerOrderReference':root.find('{https://api.efxnow.com/webservices2.3}CustomerOrderReference').text,
+                'OrderConfirmation':root.find('{https://api.efxnow.com/webservices2.3}OrderConfirmation').text,
+                'CustomerDealRef':root.find('{https://api.efxnow.com/webservices2.3}CustomerDealRef').text,}
+
+
+
+
+
+
+
+
 
     def GetRatesDataSet(self,key):
         dataset=[]
