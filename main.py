@@ -53,17 +53,7 @@ vs=forex.WebService()
 f = open('/home/leshiy/str.txt', 'rb+')
 y=pickle.load(f)
 key=vs.GetRatesServerAuth(y[0],y[1],y[2])
-rates=vs.GetRatesBlotter(key)
-for rate in rates:
-    if rate['PAIR']=='EUR/USD':
-        print rate['BID']
-        order=vs.PlaceSingleOrder('delphi7@list.ru','forex123','EUR/USD', 'EOD','B','10000',rate['BID'],'S')
-        for i in order:
-            str=order[i]
-            if str!=None:
-                print i+':'+str
-            else:
-                print i+':None'
+print vs.GetAccount(y[0],y[1],y[2])
 
 
 #print vs.PlaceSingleOrder('delphi7@list.ru','forex123','EUR/USD', 'EOD','B','10000',,'S')
