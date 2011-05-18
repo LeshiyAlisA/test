@@ -12,6 +12,9 @@ from xml.etree import cElementTree
 
 class WebService:
 
+    def DealRequestAtBest(self):
+        return 0
+
     def GetAccount(self,UserID,PWD,Brand):
         u=urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetAccountDetails?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand+'&ApplicationName=&Language=')
         str=u.read()

@@ -54,6 +54,8 @@ f = open('/home/leshiy/str.txt', 'rb+')
 y=pickle.load(f)
 key=vs.GetRatesServerAuth(y[0],y[1],y[2])
 print vs.GetAccount(y[0],y[1],y[2])
+print vs.PlaceSingleOrder(y[0],y[1],'EUR/USD','EOD','B','100000','1.42595','S')
+print vs.GetAccount(y[0],y[1],y[2])
 
 
 #print vs.PlaceSingleOrder('delphi7@list.ru','forex123','EUR/USD', 'EOD','B','10000',,'S')
