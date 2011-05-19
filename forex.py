@@ -12,8 +12,52 @@ from xml.etree import cElementTree
 
 class WebService:
 
-    def DealRequestAtBest(self):
-        return 0
+    def GetMarginBlotterDataSet(self,UserID,PWD):
+        u=urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetMarginBlotterDataSet?UserID='+UserID+'&PWD='+PWD)
+        str=u.read()
+        
+        parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"))
+        tree=parser.parse(str)
+        root= tree.getroot()
+
+        PostedMargin=root.find('.//{http://www.w3.org/1999/xhtml}postedmargin').text
+        RealizedProfit=root.find('.//{http://www.w3.org/1999/xhtml}realizedprofit').text
+        UnrealizedProfit=root.find('.//{http://www.w3.org/1999/xhtml}unrealizedprofit').text
+        MarginFactor=root.find('.//{http://www.w3.org/1999/xhtml}marginfactor').text
+        MarginBalance=root.find('.//{http://www.w3.org/1999/xhtml}marginbalance').text
+        TotalAvailable=root.find('.//{http://www.w3.org/1999/xhtml}totalavailable').text
+        OpenPosiiton=root.find('.//{http://www.w3.org/1999/xhtml}openposiiton').text
+        MaxDeal=root.find('.//{http://www.w3.org/1999/xhtml}maxdeal').text
+        USDPostedMargin=root.find('.//{http://www.w3.org/1999/xhtml}usdpostedmargin').text
+        USDRealizedProfit=root.find('.//{http://www.w3.org/1999/xhtml}usdrealizedprofit').text
+
+        return {'PostedMargin':PostedMargin,
+                'RealizedProfit':RealizedProfit,
+                'UnrealizedProfit':UnrealizedProfit,
+                'MarginFactor':MarginFactor,
+                'MarginBalance':MarginBalance,
+                'TotalAvailable':TotalAvailable,
+                'OpenPosiiton':OpenPosiiton,
+                'MaxDeal':MaxDeal,
+                'USDPostedMargin':USDPostedMargin,
+                'USDRealizedProfit':USDRealizedProfit}
+
+
+
+    def DealRequestAtBest(self,UserID,PWD,Pair,BuySell,Amount):
+        u=urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/DealRequestAtBest?UserID='+UserID+'&PWD='+PWD+'&Pair='+Pair+'&BuySell='+BuySell+'&Amount='+Amount)
+        str=u.read()
+        parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"))
+        tree=parser.parse(str)
+
+        root=tree.getroot()
+        success=root.find('.//{http://www.w3.org/1999/xhtml}success').text
+        errordescription=root.find('.//{http://www.w3.org/1999/xhtml}errordescription').text
+        errornumber=root.find('.//{http://www.w3.org/1999/xhtml}errornumber').text
+        confirmation=root.find('.//{http://www.w3.org/1999/xhtml}confirmation').text
+
+        return {'success':success,'errordescription':errordescription,'errornumber':errornumber,'confirmation':confirmation}
+
 
     def GetAccount(self,UserID,PWD,Brand):
         u=urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetAccountDetails?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand+'&ApplicationName=&Language=')
@@ -53,13 +97,6 @@ class WebService:
                 'NFARegulated':Account.find('NFARegulated').text}
 
 
-
-
-
-
-
-
-
     def PlaceSingleOrder(self,UserID,PWD,Pair,Expiry,BuySell,Amount,Rate,OrderBasis):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/PlaceSingleOrder?UserID='+UserID+'&PWD='+PWD+'&Pair='+Pair+'&Expiry='+Expiry+'&BuySell='+BuySell+'&Amount='+Amount+'&Rate='+Rate+'&OrderBasis='+OrderBasis)
         root = etree.XML(u.read())
@@ -77,7 +114,6 @@ class WebService:
             u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
             root = etree.XML(u.read())
             rates=root.findall(".//Rates")
-
 
             for rate in rates:
                 quote={"Quote":rate.find("Quote").text,"Display":rate.find("Display").text,"UpdateTime":rate.find("UpdateTime").text}
