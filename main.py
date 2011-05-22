@@ -54,29 +54,9 @@ f = open('/home/leshiy/str.txt', 'rb+')
 y=pickle.load(f)
 #key=vs.GetRatesServerAuth(y[0],y[1],y[2])
 
-tmarge=vs.GetMarginBlotterDataSet(y[0],y[1])
-print tmarge['MarginBalance']
-MarginBalance=tmarge['MarginBalance']
-UnrealizedProfit=tmarge['UnrealizedProfit']
-bal=float(MarginBalance)-float(UnrealizedProfit)
-print "balance:"+str(bal)
 
 
-print vs.DealRequestAtBest(y[0],y[1],'EUR/USD','B','100000')
-
-tmarge=vs.GetMarginBlotterDataSet(y[0],y[1])
-print tmarge['MarginBalance']
-MarginBalance=tmarge['MarginBalance']
-UnrealizedProfit=tmarge['UnrealizedProfit']
-bal=float(MarginBalance)-float(UnrealizedProfit)
-
-print "balance:"+str(bal)
-
-#print vs.GetAccount(y[0],y[1],y[2])
-#vs.GetMarginBlotterDataSet(y[0],y[1])
-
-
-#print vs.PlaceSingleOrder('delphi7@list.ru','forex123','EUR/USD', 'EOD','B','10000',,'S')
+print vs.PlaceSingleOrder('delphi7@list.ru','forex123','EUR/USD', 'EOD','B','10000','1','S')
 
 #q=main()
 #q.test2()

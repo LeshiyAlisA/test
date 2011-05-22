@@ -45,8 +45,10 @@ class WebService:
 
 
     def DealRequestAtBest(self,UserID,PWD,Pair,BuySell,Amount):
+
         u=urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/DealRequestAtBest?UserID='+UserID+'&PWD='+PWD+'&Pair='+Pair+'&BuySell='+BuySell+'&Amount='+Amount)
         str=u.read()
+
         parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"))
         tree=parser.parse(str)
 
@@ -98,21 +100,27 @@ class WebService:
 
 
     def PlaceSingleOrder(self,UserID,PWD,Pair,Expiry,BuySell,Amount,Rate,OrderBasis):
+
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/PlaceSingleOrder?UserID='+UserID+'&PWD='+PWD+'&Pair='+Pair+'&Expiry='+Expiry+'&BuySell='+BuySell+'&Amount='+Amount+'&Rate='+Rate+'&OrderBasis='+OrderBasis)
-        root = etree.XML(u.read())
-        return {'Success':root.find('{https://api.efxnow.com/webservices2.3}Success').text,
-                'ErrorDescription':root.find('{https://api.efxnow.com/webservices2.3}ErrorDescription').text,
-                'ErrorNumber':root.find('{https://api.efxnow.com/webservices2.3}ErrorNumber').text,
-                'CustomerOrderReference':root.find('{https://api.efxnow.com/webservices2.3}CustomerOrderReference').text,
-                'OrderConfirmation':root.find('{https://api.efxnow.com/webservices2.3}OrderConfirmation').text,
-                'CustomerDealRef':root.find('{https://api.efxnow.com/webservices2.3}CustomerDealRef').text,}
+        str=u.read()
+
+        parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"))
+        tree=parser.parse(str)
+        root=tree.getroot()
+
+        return {'Success':root.find('.//{http://www.w3.org/1999/xhtml}success').text,
+                'ErrorDescription':root.find('.//{http://www.w3.org/1999/xhtml}errordescription').text,
+                'ErrorNumber':root.find('.//{http://www.w3.org/1999/xhtml}errornumber').text,
+                'CustomerOrderReference':root.find('.//{http://www.w3.org/1999/xhtml}customerorderreference').text,
+                'OrderConfirmation':root.find('.//{http://www.w3.org/1999/xhtml}orderconfirmation').text,
+                'CustomerDealRef':root.find('.//{http://www.w3.org/1999/xhtml}customerdealref').text,}
 
 
     def GetRatesDataSet(self,key):
-        dataset=[]
-        try:
-            u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
-            root = etree.XML(u.read())
+
+        u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesDataSet?Key='+key)
+        str=u.read()
+        root = etree.XML(u.read())
             rates=root.findall(".//Rates")
 
             for rate in rates:
@@ -121,15 +129,15 @@ class WebService:
 
             return dataset
 
-        except :
-            return 0
 
     
         
     def GetRatesServerAuth(self,UserID,PWD,Brand):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesServerAuth?UserID='+UserID+'&PWD='+PWD+'&Brand='+Brand)
         root = etree.XML(u.read())
+        
         return root.text
+
 
     def GetRatesBlotter(self,key):
         u = urllib.urlopen('http://api.efxnow.com/DEMOWebServices2.8/Service.asmx/GetRatesBlotter?Key='+key)
